@@ -27,4 +27,14 @@ jobs:
     - name: Run Vitest
       run: npx vitest run
     
-
+    - name: Deploy to Vercel (Production)
+      if: github.event_name == 'push'
+      env:
+        VERCEL_TOKEN: ${{ 2oOMLQap4zgObnLjzkNW23Gr }}
+        VERCEL_ORG_ID: ${{ team_KL82Xh4lhrzVsaoRDYF5Qp4H }}
+        VERCEL_PROJECT_ID: ${{ prj_1XChNgZJ1A4nbAO5o7cGK5wIoR42}}
+      run: |
+        npm install --global vercel
+        vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+        vercel build --prod --token=$VERCEL_TOKEN
+        vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
